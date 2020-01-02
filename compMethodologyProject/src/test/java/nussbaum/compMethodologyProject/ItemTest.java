@@ -18,7 +18,7 @@ public class ItemTest {
 	public void calculateWeighttest() {
 		Item item = new Item(4.0, "Iron");
 		
-		double weight = 11.0;
+		double weight = 6.0;
 		assertEquals(weight, item.calculateWeightCost(), 0);
 	 	
 	}

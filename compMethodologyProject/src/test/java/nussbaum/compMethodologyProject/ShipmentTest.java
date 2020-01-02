@@ -74,8 +74,8 @@ public class ShipmentTest {
 	{
 		shipment.addPackage(item1);
 		shipment.addPackage(item2);
-		double weight = shipment.calculateTotalWeightCost();
-		assertEquals(22.0, weight,0);
+		double cost = shipment.calculateTotalWeightCost();
+		assertEquals(12.0, cost,0);
 	}
 
 	@Test

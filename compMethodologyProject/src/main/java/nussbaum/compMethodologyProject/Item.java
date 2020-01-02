@@ -1,27 +1,29 @@
 package nussbaum.compMethodologyProject;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Formatter;
 
 public class Item 
 {
-private double weight;
+private BigDecimal weight;
 private String description;
 private final static double BASEPRICE = 5.0;
 private final static double COSTPERPOUND = 1.5;
 
-public Item(double weight, String desc)
+public Item(String weight, String desc)
 {
-	this.weight=weight;
+	this.weight=new BigDecimal(weight);
 	this.description =desc;
 }
 
 
-public double getWeight() {
+public BigDecimal getWeight() {
 	return weight;
 }
 
 
-public void setWeight(double weight) {
+public void setWeight(BigDecimal weight) {
 	this.weight = weight;
 }
 
@@ -35,19 +37,16 @@ public void setDescription(String description) {
 	this.description = description;
 }
 
-public double calculateWeightCost()
+public BigDecimal calculateWeightCost()
 {
-	if(weight> 50)
-	{
-		throw new OverweightException("Your Package Exceeds the weight limit");
-	}
-	return (weight * COSTPERPOUND) + BASEPRICE;
+
+return (weight.multiply(new BigDecimal(COSTPERPOUND)) );
 }
 
-public Formatter format()
+public String format()
 {
-Formatter formatter = new Formatter();
-return formatter.format(description + " Weight: " + "%.2f", weight + " lb");
+
+return description + " Weight: " + weight.toString() + " lb";
 }
 
 
@@ -56,9 +55,7 @@ public int hashCode() {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + ((description == null) ? 0 : description.hashCode());
-	long temp;
-	temp = Double.doubleToLongBits(weight);
-	result = prime * result + (int) (temp ^ (temp >>> 32));
+	result = prime * result + ((weight == null) ? 0 : weight.hashCode());
 	return result;
 }
 
@@ -71,15 +68,12 @@ public boolean equals(Object obj) {
 		return false;
 	if (getClass() != obj.getClass())
 		return false;
-	Item other = (Item) obj;
-	if (description == null) {
-		if (other.description != null)
-			return false;
-	} else if (!description.equals(other.description))
-		return false;
-	if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
-		return false;
-	return true;
+	Item that = (Item) obj;
+	Object[] thatFields = {that.getDescription(),that.getWeight()};
+	Object[] thisFields = {this.getDescription(),this.getWeight()};
+	return Arrays.equals(thatFields, thisFields);
 }
+
+
 
 }

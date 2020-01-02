@@ -11,20 +11,23 @@ public class Shipment
 {
 	
 private ArrayList <Item> items;
-private Address to;
-private Address from;
-private int serviceType;
+private Customer to;
+private Customer from;
+private ServiceType serviceType;
 private localDate date;
+private final static double COSTPERPOUND = 1.5;
+private final static double STANDARDBASEPRICE = 5.0;
+private final static double EXPEDITEDBASEPRICE = 10.0;
+private final static double OVERNIGHTBASEPRICE = 15.0;
 
-
-public Shipment(Address to, Address from, int service)
+public Shipment(Customer to, Customer from,  String service)
 {
 	this.to = to;
 	this.from=from;
-	this.serviceType=service;
+	this.serviceType=ServiceType.valueOf(service);
 	items= new ArrayList<Item>();
 }
-public Shipment(Address to, Address from)
+public Shipment(Customer to, Customer from)
 {
 	this.to = to;
 	this.from=from;
@@ -45,12 +48,12 @@ public LocalDate getEstimatedDeliveryDate()
 	LocalDate today = date.getCurrentDate();
 	
 	
-	if(serviceType==1)
+	if(serviceType.equals(ServiceType.STANDARD))
 	{
 		return today.plusDays(7); 
 	}
 	
-	else if (serviceType==2)
+	else if (serviceType.equals(ServiceType.EXPEDITED))
 	{
 		return today.plusDays(5); 
 	}
@@ -103,17 +106,41 @@ public ArrayList<Item> getItems()
 	return itemsCopy;
 }
 
-public Formatter getFromAddress() {
+public String getFromAddress() {
 
-	return from.format();
+	return from.getAddress().toString();
 }
-public Formatter getToAddress() {
+public String getToAddress() {
 
-	return to.format();
+	return to.getAddress().toString();
 }
 
-public void setServiceType(int serviceType) {
-	this.serviceType = serviceType;
+
+
+public void setServiceType(String serviceType) {
+	this.serviceType = ServiceType.valueOf(serviceType);
 	
 }
+
+public String displayReceipt()
+{
+StringBuilder sb = new StringBuilder();
+sb.append("Sender's Address:" + from.getAddress());
+sb.append("\nRecepient's Address:" + to.getAddress());
+sb.append("\n_________________________________________________________________________________________________");
+sb.append("\nItems in shipment:\n");
+for(Item i: items)
+{
+	sb.append(i.getDescription() + " Cost:" + i.calculateWeightCost() + "\n");
+}
+sb.append("-----------------------------");
+sb.append("\nTotal Cost: " + calculateTotalWeightCost());
+sb.append("\nEstimated Delivery Date - On or Before: " + getEstimatedDeliveryDate());
+sb.append("\nTracking Number: " + generateTrackingNumber());
+sb.append("\n\nThank you for using our service!");
+
+
+return sb.toString();
+}
+
 }

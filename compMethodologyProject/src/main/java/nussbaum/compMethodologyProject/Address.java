@@ -4,15 +4,15 @@ import java.util.Formatter;
 
 public class Address 
 {
-private String name;
+
 private String street;
 private String city;
 private USState state;
 private String zipCode;
 
-public Address(String name, String street, String city, String state, String zip)  {
+public Address(String street, String city, String state, String zip)  {
 
-this.name=name;
+
 this.street = street;
 this.city = city;
 USState st = USState.valueOf(state);
@@ -21,16 +21,13 @@ this.zipCode = zip;
 
 }
 
-public String getName() {
-	return name;
-}
 
-public void setName(String name) {
-	this.name = name;
-}
+
+
+
 
 public Address(Address a) throws MissingDataException {
-this(a.getName(),a.getStreet(), a.getCity(), a.getState(), a.getZipCode());
+this(a.getStreet(), a.getCity(), a.getState(), a.getZipCode());
 }
 
 public String getStreet() {
@@ -87,10 +84,10 @@ return this.zipCode.compareTo(a.zipCode);
 return i;
 }
 
-public Formatter format() {
-Formatter formatter = new Formatter();
-    formatter.format(" Name: ", name + " Street: " + street + " City: " + city + " State: " + state.toString()  + " ZipCode: " + zipCode );
-    return formatter;
+public String toString() {
+
+    return " Street: " + street + " City: " + city + " State: " + state.toString()  + " ZipCode: " + zipCode ;
+   
 
 }
 
