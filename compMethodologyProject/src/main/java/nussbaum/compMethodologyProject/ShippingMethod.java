@@ -1,5 +1,5 @@
 package nussbaum.compMethodologyProject;
 
-public enum ServiceType {
+public enum ShippingMethod {
 	EXPEDITED, OVERNIGHT, STANDARD
 }

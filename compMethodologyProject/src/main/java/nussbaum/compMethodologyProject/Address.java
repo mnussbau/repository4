@@ -1,5 +1,6 @@
 package nussbaum.compMethodologyProject;
 
+import java.util.Arrays;
 import java.util.Formatter;
 
 public class Address 
@@ -26,9 +27,6 @@ this.zipCode = zip;
 
 
 
-public Address(Address a) throws MissingDataException {
-this(a.getStreet(), a.getCity(), a.getState(), a.getZipCode());
-}
 
 public String getStreet() {
 return street;
@@ -54,25 +52,10 @@ if (obj == null)
 return false;
 if (getClass() != obj.getClass())
 return false;
-Address other = (Address) obj;
-if (state != other.state)
-return false;
-if (city == null) {
-if (other.city != null)
-return false;
-} else if (!city.equals(other.city))
-return false;
-if (street == null) {
-if (other.street != null)
-return false;
-} else if (!street.equals(other.street))
-return false;
-if (zipCode == null) {
-if (other.zipCode != null)
-return false;
-} else if (!zipCode.equals(other.zipCode))
-return false;
-return true;
+Address that = (Address) obj;
+Object[] thatFields = {that.street, that.city, that.state, that.zipCode };
+Object[] thisFields = {this.street, this.city, this.state, this.zipCode };
+return Arrays.equals(thatFields, thisFields);
 }
 
 public int compareTo(Address a) {

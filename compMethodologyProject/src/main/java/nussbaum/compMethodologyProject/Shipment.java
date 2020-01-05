@@ -1,5 +1,7 @@
 package nussbaum.compMethodologyProject;
 
+import java.util.List;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -10,10 +12,10 @@ import org.junit.runners.Parameterized;
 public class Shipment 
 {
 	
-private ArrayList <Item> items;
+private List <Item> items;
 private Customer to;
-private Customer from;
-private ServiceType serviceType;
+private final Customer from;
+private ShippingMethod shippingMethod;
 private localDate date;
 private final static double COSTPERPOUND = 1.5;
 private final static double STANDARDBASEPRICE = 5.0;
@@ -24,7 +26,7 @@ public Shipment(Customer to, Customer from,  String service)
 {
 	this.to = to;
 	this.from=from;
-	this.serviceType=ServiceType.valueOf(service);
+	this.shippingMethod=ShippingMethod.valueOf(service);
 	items= new ArrayList<Item>();
 }
 public Shipment(Customer to, Customer from)
@@ -48,12 +50,12 @@ public LocalDate getEstimatedDeliveryDate()
 	LocalDate today = date.getCurrentDate();
 	
 	
-	if(serviceType.equals(ServiceType.STANDARD))
+	if(shippingMethod.equals(ShippingMethod.STANDARD))
 	{
 		return today.plusDays(7); 
 	}
 	
-	else if (serviceType.equals(ServiceType.EXPEDITED))
+	else if (shippingMethod.equals(ShippingMethod.EXPEDITED))
 	{
 		return today.plusDays(5); 
 	}
@@ -69,35 +71,35 @@ public LocalDate getEstimatedDeliveryDate()
 
 public String generateTrackingNumber()
 {
-	  String numbers = "0123456789";
-	  
-	  int length=20;
-	  
-	  StringBuilder sb = new StringBuilder(length);
-      for (int i = 0; i < length; i++) 
-      { 
+ 
+String numbers = "0123456789" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+ 
+ int length=13;
+ 
+ StringBuilder sb = new StringBuilder(length);
+      for (int i = 0; i < length; i++)
+      {
 
-          int index   = (int)(numbers.length() * Math.random()); 
-          sb.append(numbers .charAt(index)); 
-      } 
+          int index   = (int)(numbers.length() * Math.random());
+          sb.append(numbers .charAt(index));
+      }
 
-      return sb.toString(); 
-  } 
+      return sb.toString();
 	  
 
-public double calculateTotalWeightCost()
+public BigDecimal calculateTotalWeightCost()
 {
-	double sum = 0.0;
+	BigDecimal sum = new BigDecimal(0.0);
 	for(Item p : items)
 	{
-		sum += p.calculateWeightCost();
+	 sum= sum.add(p.calculateWeightCost());
 	}
 	
 	return sum;
 }
-public ArrayList<Item> getItems()
+public List<Item> getItems()
 {
-	ArrayList<Item> itemsCopy = new ArrayList<Item>(items.size());
+	List<Item> itemsCopy = new ArrayList<Item>(items.size());
 	for(Item i : items)
 	{
 		itemsCopy.add(new Item(i.getWeight(), i.getDescription()));
@@ -118,7 +120,7 @@ public String getToAddress() {
 
 
 public void setServiceType(String serviceType) {
-	this.serviceType = ServiceType.valueOf(serviceType);
+	this.shippingMethod = ShippingMethod.valueOf(serviceType);
 	
 }
 

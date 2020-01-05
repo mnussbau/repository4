@@ -16,7 +16,7 @@ package nussbaum.compMethodologyProject;
 			String city = prompter.promptUser("Enter your city: ");
 			String state = prompter.promptUser("Enter your state: ");
 			String zip = prompter.promptUser("Enter your zip: ");
-			return new Address(street, city, state, zip);
+			return new Address(street, city, state.toUpperCase(), zip);
 		}
 		
 		private String promptUser(String prompt) {

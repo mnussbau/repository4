@@ -6,8 +6,8 @@ import java.util.Formatter;
 
 public class Item 
 {
-private BigDecimal weight;
-private String description;
+private final BigDecimal weight;
+private final String description;
 private final static double BASEPRICE = 5.0;
 private final static double COSTPERPOUND = 1.5;
 
@@ -18,14 +18,12 @@ public Item(String weight, String desc)
 }
 
 
-public BigDecimal getWeight() {
-	return weight;
+public String getWeight() {
+	return weight.toString();
 }
 
 
-public void setWeight(BigDecimal weight) {
-	this.weight = weight;
-}
+
 
 
 public String getDescription() {
@@ -33,9 +31,7 @@ public String getDescription() {
 }
 
 
-public void setDescription(String description) {
-	this.description = description;
-}
+
 
 public BigDecimal calculateWeightCost()
 {
