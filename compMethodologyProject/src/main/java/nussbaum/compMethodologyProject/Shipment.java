@@ -86,7 +86,7 @@ String numbers = "0123456789" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
       return sb.toString();
 	  
-
+}
 public BigDecimal calculateTotalWeightCost()
 {
 	BigDecimal sum = new BigDecimal(0.0);
@@ -124,25 +124,7 @@ public void setServiceType(String serviceType) {
 	
 }
 
-public String displayReceipt()
-{
-StringBuilder sb = new StringBuilder();
-sb.append("Sender's Address:" + from.getAddress());
-sb.append("\nRecepient's Address:" + to.getAddress());
-sb.append("\n_________________________________________________________________________________________________");
-sb.append("\nItems in shipment:\n");
-for(Item i: items)
-{
-	sb.append(i.getDescription() + " Cost:" + i.calculateWeightCost() + "\n");
-}
-sb.append("-----------------------------");
-sb.append("\nTotal Cost: " + calculateTotalWeightCost());
-sb.append("\nEstimated Delivery Date - On or Before: " + getEstimatedDeliveryDate());
-sb.append("\nTracking Number: " + generateTrackingNumber());
-sb.append("\n\nThank you for using our service!");
 
 
-return sb.toString();
-}
 
 }
