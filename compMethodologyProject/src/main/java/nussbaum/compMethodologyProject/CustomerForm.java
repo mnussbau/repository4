@@ -1,27 +1,33 @@
 package nussbaum.compMethodologyProject;
 
-
-
 public class CustomerForm {
-private final StringPrompter prompter;
-private final Address address;
-	
-	public CustomerForm(StringPrompter prompter, Address address) {
+	private final Prompter prompter;
+	private final AddressForm addressForm;
+
+	public CustomerForm(Prompter prompter) {
 		this.prompter = prompter;
-		this.address = address;
+		addressForm = new AddressForm(prompter);
+
 	}
+
 	public Customer enterCustomer() {
-		
-		
-		String firstName = prompter.promptUser("Enter first name");
-		String lastName = prompter.promptUser("Enter last name");
-		String phoneNumber = prompter.promptUser("Enter  phone number");
-		return new Customer(firstName, lastName, phoneNumber, this.address);
+
+		String firstName = promptUser("First name: ");
+		String lastName = promptUser("Last name: ");
+		String phoneNumber = promptUser("Phone number: ");
+		while (phoneNumber.length() != 10) {
+			prompter.println("Please enter a 10 digit phone number");
+			phoneNumber = promptUser("Phone number: ");
+
+		}
+		Address address = addressForm.enterAddress();
+		return new Customer(firstName, lastName, phoneNumber, address);
+
 	}
-	
+
 	private String promptUser(String prompt) {
-		
-		return prompter.promptUser(prompt);
+
+		return prompter.promptForStringNext(prompt);
 	}
 
 }

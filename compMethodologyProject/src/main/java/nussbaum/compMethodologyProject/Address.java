@@ -23,11 +23,6 @@ this.zipCode = zip;
 }
 
 
-
-
-
-
-
 public String getStreet() {
 return street;
 }
@@ -58,18 +53,9 @@ Object[] thisFields = {this.street, this.city, this.state, this.zipCode };
 return Arrays.equals(thatFields, thisFields);
 }
 
-public int compareTo(Address a) {
-int i = this.street.compareTo(a.street);
-
-if (i == 0) {
-return this.zipCode.compareTo(a.zipCode);
-}
-return i;
-}
-
 public String toString() {
 
-    return " Street: " + street + " City: " + city + " State: " + state.toString()  + " ZipCode: " + zipCode ;
+    return " Street: " + street + " City: " + city + " State: " + state  + " ZipCode: " + zipCode ;
    
 
 }

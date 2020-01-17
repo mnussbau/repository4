@@ -2,6 +2,14 @@ package nussbaum.compMethodologyProject;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
 import java.math.BigDecimal;
 
 import org.junit.After;
@@ -14,27 +22,38 @@ import org.junit.runners.Parameterized;
 
 
 public class ItemTest {
-	
-	
-	@Test
-	public void calculateWeighttest() {
-		Item item = new Item("4.0", "Iron");
-		BigDecimal weightBG = new BigDecimal(6.0);
-		String weight = weightBG.toString();
-		assertEquals(weight, item.calculateWeightCost(), 0);
-	 	
-	}
 
-	@Test
-	public void calculateWeightTest() {
-		Item item = new Item("51.0", "Iron");
-		
-		try {
-			item.calculateWeightCost();
-			fail("Expected Overweight Exception");
-		}
-		catch(OverweightException e){
-			
-		}
-	}
+private Item item;	
+	
+@Before
+public void setUp()
+{
+	item = new Item("Iron", "4.0");
+}
+	
+@Test
+public void calculateWeightTest() 
+{
+String string = "6.00";
+BigDecimal weight = new BigDecimal(string);
+assertEquals(weight, item.calculateWeightCost());
+}
+
+
+@Test
+public void testEquals()
+{
+	Item item2 = new Item("Iron", "4.0");
+	assertTrue(item.equals(item2));	
+}
+
+
+@Test
+public void testNotEquals()
+{
+	Item item2 = new Item("Toy", "4.0");
+	assertFalse(item.equals(item2));
+	
+}
+
 }

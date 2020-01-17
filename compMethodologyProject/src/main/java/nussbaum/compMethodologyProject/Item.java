@@ -6,15 +6,15 @@ import java.util.Formatter;
 
 public class Item 
 {
-private final BigDecimal weight;
+private BigDecimal weight;
 private final String description;
-private final static double BASEPRICE = 5.0;
-private final static double COSTPERPOUND = 1.5;
+private static BigDecimal costPerPound;
 
-public Item(String weight, String desc)
+public Item(String desc, String weight)
 {
-	this.weight=new BigDecimal(weight);
 	this.description =desc;
+	this.weight=new BigDecimal(weight);
+	costPerPound = new BigDecimal(1.5);
 }
 
 
@@ -23,20 +23,15 @@ public String getWeight() {
 }
 
 
-
-
-
 public String getDescription() {
 	return description;
 }
 
 
-
-
 public BigDecimal calculateWeightCost()
 {
 
-return (weight.multiply(new BigDecimal(COSTPERPOUND)) );
+return (weight.multiply(costPerPound));
 }
 
 public String format()

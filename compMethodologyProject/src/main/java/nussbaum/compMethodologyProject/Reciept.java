@@ -1,42 +1,49 @@
 package nussbaum.compMethodologyProject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Reciept {
-	private final Customer to;
-	private final Customer from;
+
 	private final Shipment shipment;
-	private List<Item> items;
-	public Reciept(Customer to, Customer from, Shipment shipment) {
-		
-		this.to = to;
-		this.from = from;
+
+	public Reciept(Shipment shipment) {
 		this.shipment = shipment;
-		List<Item> items = new ArrayList<Item>();
-		
 	}
-	
-	
-	public String displayReceipt()
-	{
-	StringBuilder sb = new StringBuilder();
-	sb.append("Sender's Address:" + from.getAddress());
-	sb.append("\nRecepient's Address:" + to.getAddress());
-	sb.append("\n_________________________________________________________________________________________________");
-	sb.append("\nItems in shipment:\n");
-	for(Item i: items)
-	{
-		sb.append(i.getDescription() + " Cost:" + i.calculateWeightCost() + "\n");
-	}
-	sb.append("-----------------------------");
-	sb.append("\nTotal Cost: " + shipment.calculateTotalWeightCost());
-	sb.append("\nEstimated Delivery Date - On or Before: " + shipment.getEstimatedDeliveryDate());
-	sb.append("\nTracking Number: " + shipment.generateTrackingNumber());
-	sb.append("\n\nThank you for using our service!");
 
+	public String displayReceipt() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Sender's Name: " + shipment.getFromfirstName() + " " + shipment.getFromlastName());
+		sb.append("\nPhone Number: " + shipment.getFromPhoneNumber());
+		sb.append("\nAddress:" + shipment.getFromAddress());
+		sb.append("\n\nRecepient's Name: " + shipment.getTofirstName() + " " + shipment.getTolastName());
+		sb.append("\nPhone Number: " + shipment.getToPhoneNumber());
+		sb.append("\nAddress:" + shipment.getToAddress());
+		sb.append("\n____________________________________________________________________");
+		sb.append("\nItems in shipment:\n");
+		for (Item i : shipment.getItems()) {
+			sb.append(i.getDescription() + ":" + " Weight Cost:" + i.calculateWeightCost() + "\n");
+		}
+		sb.append("--------------------------");
 
-	return sb.toString();
+		sb.append("\nTotal Weight Cost:   $" + shipment.calculateTotalWeightCost());
+		sb.append("\nDistance Cost:       $" + shipment.calculateTotalDistanceCost());
+		if (shipment.getShippingMethod().equals(ShippingMethod.STANDARD)) {
+			sb.append("\nStandard Base Price: $" + shipment.getStandardbaseprice());
+		}
+
+		else if (shipment.getShippingMethod().equals(ShippingMethod.EXPEDITED)) {
+			sb.append("\nExpedited Base Price:$" + shipment.getExpeditedbaseprice());
+
+		}
+
+		else {
+			sb.append("\nOvernight Base Price:$" + shipment.getOvernightbaseprice());
+		}
+
+		sb.append("\n--------------------------");
+		sb.append("\nTotal Cost:          $" + shipment.getTotalShipmentCost());
+		sb.append("\n\nEstimated Delivery Date - On or Before: " + shipment.getEstimatedDeliveryDate());
+		sb.append("\nTracking Number: " + shipment.getTrackingNumber());
+
+		return sb.toString();
 	}
 
 }

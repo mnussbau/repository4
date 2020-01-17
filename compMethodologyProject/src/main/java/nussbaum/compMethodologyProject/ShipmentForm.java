@@ -2,26 +2,26 @@ package nussbaum.compMethodologyProject;
 
 public class ShipmentForm {
 	
-	private final StringPrompter prompter;
-	private final Customer to;
-	private final Customer from;
+	private final Prompter prompter;
+	private final CustomerForm toForm;
+	private final CustomerForm fromForm;
 		
-		public ShipmentForm(StringPrompter prompter, Customer to, Customer from) {
+		public ShipmentForm(Prompter prompter) {
 			this.prompter = prompter;
-			this.to = to;
-			this.from = from;
+			toForm = new CustomerForm(prompter);
+			fromForm = new CustomerForm(prompter);
+		
 		}
 		public Shipment enterShippingMethod() {
 			
-			
-			String shippingMethod = prompter.promptUser("Enter A Service Type:\nOverNight\nExpedited\nStandard");
-			return new Shipment(to, from, shippingMethod.toUpperCase() );
-		}
+			prompter.println("Enter Sender's address");
+			Customer from = fromForm.enterCustomer();
+			prompter.println("Enter Recepient's address");
+			Customer to  = toForm.enterCustomer();
+			String shippingMethod = prompter.promptForStringNext("Enter A Service Type:\nStandard(5-7 Days)\nExpedited(2-5 Days)\nOvernight");
 		
-		private String promptUser(String prompt) {
-			
-			return prompter.promptUser(prompt);
+			return new Shipment (from, to, shippingMethod.toUpperCase() );
 		}
-
+	
 
 }
