@@ -25,11 +25,11 @@ public class Receipt {
 
 		sb.append("\nTotal Weight Cost:   $" + shipment.calculateTotalWeightCost());
 		sb.append("\nDistance Cost:       $" + shipment.calculateTotalDistanceCost());
-		if (shipment.getShippingMethod().equals(ShippingMethod.STANDARD)) {
+		if (shipment.getShippingMethod().equals("STANDARD")) {
 			sb.append("\nStandard Base Price: $" + shipment.getStandardbaseprice());
 		}
 
-		else if (shipment.getShippingMethod().equals(ShippingMethod.EXPEDITED)) {
+		else if (shipment.getShippingMethod().equals("EXPEDITED")) {
 			sb.append("\nExpedited Base Price:$" + shipment.getExpeditedbaseprice());
 
 		}
