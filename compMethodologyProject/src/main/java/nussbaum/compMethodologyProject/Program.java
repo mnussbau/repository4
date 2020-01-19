@@ -5,6 +5,7 @@ public class Program {
 	private final Prompter prompter;
 	private final ShipmentForm sf;
 	private final ItemForm iF;
+	private Shipment shipment;
 
 	public Program(Prompter prompter, ShipmentForm sf, ItemForm iF)
 
@@ -16,33 +17,20 @@ public class Program {
 
 	public void showMenu() {
 		prompter.println("Welcome to Super Shipping Service Company Inc.");
-
 		int choice;
-		Shipment shipment = null;
 		while ((choice = getAnswer()) != 4) {
 
 			switch (choice) {
 			case 1:
-				shipment = sf.enterShippingMethod();
-				prompter.println("\nShipment Created");
-				prompter.println("Tracking Number: " + shipment.getTrackingNumber());
-
+				createShipment();
 				break;
 
-			case 2:
-				String trackingNumber = prompter.promptForStringNext("Enter tracking number");
-				ItemForm iF = new ItemForm(prompter);
-				Item item = iF.enterItemMethod();
-				shipment.addItem(trackingNumber, item);
+			case 2:			
+				addItem();
 				break;
 
 			case 3:
-				if (shipment.getItems().isEmpty()) {
-					prompter.println("You did not enter any items to the shipment yet!");
-				} else {
-					Reciept receipt = new Reciept(shipment);
-					prompter.println(receipt.displayReceipt());
-				}
+				completeShipment();
 				break;
 
 			default:
@@ -65,5 +53,29 @@ public class Program {
 		prompter.println("4. Exit");
 		return prompter.promptForInt("please enter 1, 2, 3 or 4");
 	}
+	
+	public void createShipment()
+	{
+		shipment = sf.enterShippingMethod();
+		prompter.println("\nShipment Created");
+		prompter.println("Tracking Number: " + shipment.getTrackingNumber());
+	}
 
+	public void addItem()
+	{
+		String trackingNumber = prompter.promptForStringNext("Enter tracking number");
+		ItemForm iF = new ItemForm(prompter);
+		Item item = iF.enterItemMethod();
+		shipment.addItem(trackingNumber, item);
+	}
+	
+	public void completeShipment()
+	{
+		if (shipment.getItems().isEmpty()) {
+			prompter.println("You did not enter any items to the shipment yet!");
+		} else {
+			Receipt receipt = new Receipt(shipment);
+			prompter.println(receipt.displayReceipt());
+		}
+	}
 }

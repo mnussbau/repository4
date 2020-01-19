@@ -1,10 +1,10 @@
 package nussbaum.compMethodologyProject;
 
-public class Reciept {
+public class Receipt {
 
 	private final Shipment shipment;
 
-	public Reciept(Shipment shipment) {
+	public Receipt(Shipment shipment) {
 		this.shipment = shipment;
 	}
 
